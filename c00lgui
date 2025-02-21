@@ -7,7 +7,7 @@
  Y888P  ~Y8888P' Y888888P      888888D      Y88888P ~Y8888P' YP   YP  CONVERTER 
 ]=]
 
--- Instances: 24 | Scripts: 10 | Modules: 0 | Tags: 0
+-- Instances: 28 | Scripts: 12 | Modules: 0 | Tags: 0
 local G2L = {};
 
 -- StarterGui.ScreenGui
@@ -227,6 +227,42 @@ G2L["17"]["Position"] = UDim2.new(0.18632, 0, 0.71345, 0);
 
 -- StarterGui.ScreenGui.Frame.TextButton.LocalScript
 G2L["18"] = Instance.new("LocalScript", G2L["17"]);
+
+
+
+-- StarterGui.ScreenGui.Frame.TextButton
+G2L["19"] = Instance.new("TextButton", G2L["2"]);
+G2L["19"]["BorderSizePixel"] = 2;
+G2L["19"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["19"]["TextSize"] = 14;
+G2L["19"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["19"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["19"]["Size"] = UDim2.new(0, 104, 0, 50);
+G2L["19"]["BorderColor3"] = Color3.fromRGB(255, 0, 5);
+G2L["19"]["Text"] = [[Transparent]];
+G2L["19"]["Position"] = UDim2.new(0.36536, 0, 0.17544, 0);
+
+
+-- StarterGui.ScreenGui.Frame.TextButton.LocalScript
+G2L["1a"] = Instance.new("LocalScript", G2L["19"]);
+
+
+
+-- StarterGui.ScreenGui.Frame.TextButton
+G2L["1b"] = Instance.new("TextButton", G2L["2"]);
+G2L["1b"]["BorderSizePixel"] = 2;
+G2L["1b"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["1b"]["TextSize"] = 14;
+G2L["1b"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["1b"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["1b"]["Size"] = UDim2.new(0, 104, 0, 50);
+G2L["1b"]["BorderColor3"] = Color3.fromRGB(255, 0, 5);
+G2L["1b"]["Text"] = [[Jumpscare]];
+G2L["1b"]["Position"] = UDim2.new(0.36536, 0, 0.35673, 0);
+
+
+-- StarterGui.ScreenGui.Frame.TextButton.LocalScript
+G2L["1c"] = Instance.new("LocalScript", G2L["1b"]);
 
 
 
@@ -485,5 +521,81 @@ local script = G2L["18"];
 	
 end;
 task.spawn(C_18);
+-- StarterGui.ScreenGui.Frame.TextButton.LocalScript
+local function C_1a()
+local script = G2L["1a"];
+	local player = game.Players.LocalPlayer
+	local button = script.Parent
+	button.MouseButton1Click:Connect(function()
+		if player.Character then
+			for _, part in pairs(player.Character:GetChildren()) do
+				if part:IsA("BasePart") and part.Name ~= "HumanoidRootPart" then
+					part.Transparency = 0.8 -- Semi-invisible
+					part.CanCollide = false -- Optional: Prevent blocking
+					print("ez")
+				end
+			end
+		end
+	end)
+	local button = script.Parent
+	local player = game:GetService("Players").LocalPlayer
+	local replicatedStorage = game:GetService("ReplicatedStorage")
+	
+	-- Check if the RemoteEvent exists; if not, create it
+	local event = replicatedStorage:FindFirstChild("MakeInvisibleEvent")
+	
+	if not event then
+		event = Instance.new("RemoteEvent")
+		event.Name = "MakeInvisibleEvent"
+		event.Parent = replicatedStorage
+	end
+	
+	-- When button is clicked, fire the event to the server
+	button.MouseButton1Click:Connect(function()
+		event:FireServer()
+		print("Sent invisibility request to server")
+	end)
+	
+end;
+task.spawn(C_1a);
+-- StarterGui.ScreenGui.Frame.TextButton.LocalScript
+local function C_1c()
+local script = G2L["1c"];
+	local button = script.Parent -- The GUI button
+	local player = game.Players.LocalPlayer
+	local gui = player:WaitForChild("PlayerGui")
+	
+	-- Function to show the fullscreen decal
+	local function createDecal()
+		-- Check if decal already exists, remove it if so
+		local existingDecal = gui:FindFirstChild("FullscreenDecal")
+		if existingDecal then
+			existingDecal:Destroy()
+		end
+	
+		-- Create a new fullscreen ImageLabel
+		local imageFrame = Instance.new("ImageLabel")
+		imageFrame.Name = "FullscreenDecal"
+		imageFrame.Size = UDim2.new(1, 0, 1, 0) -- Fullscreen
+		imageFrame.Position = UDim2.new(0, 0, 0, 0)
+		imageFrame.BackgroundTransparency = 1 -- No background
+		imageFrame.Image = "rbxassetid://10560525674" -- Replace with your decal ID
+		imageFrame.ScaleType = Enum.ScaleType.Stretch -- Ensures it stretches to fill the screen
+		imageFrame.Parent = gui
+		print("click")
+	
+		-- Wait 3 seconds, then remove the decal
+		task.wait(3)
+		if imageFrame then
+			imageFrame:Destroy()
+		end
+	end
+	
+	-- Connect button click event
+	button.MouseButton1Click:Connect(createDecal)
+	
+	
+end;
+task.spawn(C_1c);
 
 return G2L["1"], require;
