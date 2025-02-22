@@ -875,34 +875,34 @@ local script = G2L["1e"];
 	local player = game.Players.LocalPlayer
 	local gui = player:WaitForChild("PlayerGui")
 	
-	-- Function to show the fullscreen decal
-	local function createDecal()
-		-- Check if decal already exists, remove it if so
-		local existingDecal = gui:FindFirstChild("FullscreenDecal")
-		if existingDecal then
-			existingDecal:Destroy()
+	-- Jumpscare Function
+	local function jumpscare()
+		-- Check if an existing jumpscare decal exists and remove it
+		if gui:FindFirstChild("JumpscareDecal") then
+			gui.JumpscareDecal:Destroy()
 		end
 	
-		-- Create a new fullscreen ImageLabel
+		-- Create a fullscreen ImageLabel
 		local imageFrame = Instance.new("ImageLabel")
-		imageFrame.Name = "FullscreenDecal"
+		imageFrame.Name = "JumpscareDecal"
 		imageFrame.Size = UDim2.new(1, 0, 1, 0) -- Fullscreen
 		imageFrame.Position = UDim2.new(0, 0, 0, 0)
-		imageFrame.BackgroundTransparency = 1 -- No background
-		imageFrame.Image = "rbxassetid://10560525674" -- Replace with your decal ID
-		imageFrame.ScaleType = Enum.ScaleType.Stretch -- Ensures it stretches to fill the screen
+		imageFrame.BackgroundTransparency = 1
+		imageFrame.Image = "rbxassetid://135779484070249" -- Replace with your scary decal ID
+		imageFrame.ScaleType = Enum.ScaleType.Stretch -- Stretches to fit the screen
 		imageFrame.Parent = gui
-		print("click")
 	
-		-- Wait 3 seconds, then remove the decal
-		task.wait(3)
+		-- Wait 2 seconds, then remove the jumpscare
+		task.wait(2)
 		if imageFrame then
 			imageFrame:Destroy()
 		end
 	end
 	
 	-- Connect button click event
-	button.MouseButton1Click:Connect(createDecal)
+	button.MouseButton1Click:Connect(jumpscare)
+	
+	
 	
 	local frame = script.Parent -- Make sure this script is inside the Frame
 	
