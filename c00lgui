@@ -7,7 +7,7 @@
  Y888P  ~Y8888P' Y888888P      888888D      Y88888P ~Y8888P' YP   YP  CONVERTER 
 ]=]
 
--- Instances: 31 | Scripts: 15 | Modules: 0 | Tags: 0
+-- Instances: 34 | Scripts: 17 | Modules: 0 | Tags: 0
 local G2L = {};
 
 -- StarterGui.ScreenGui
@@ -281,6 +281,29 @@ G2L["1f"] = Instance.new("LocalScript", G2L["2"]);
 
 
 
+-- StarterGui.ScreenGui.Frame.TextButton
+G2L["20"] = Instance.new("TextButton", G2L["2"]);
+G2L["20"]["BorderSizePixel"] = 2;
+G2L["20"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["20"]["TextSize"] = 14;
+G2L["20"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["20"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["20"]["Size"] = UDim2.new(0, 104, 0, 50);
+G2L["20"]["BorderColor3"] = Color3.fromRGB(255, 0, 5);
+G2L["20"]["Text"] = [[Billboard Gui]];
+G2L["20"]["Position"] = UDim2.new(0.36536, 0, 0.53216, 0);
+
+
+-- StarterGui.ScreenGui.Frame.TextButton.LocalScript
+G2L["21"] = Instance.new("LocalScript", G2L["20"]);
+
+
+
+-- StarterGui.ScreenGui.Frame.TextButton.LocalScript
+G2L["22"] = Instance.new("LocalScript", G2L["20"]);
+
+
+
 -- StarterGui.ScreenGui.Frame.LocalScript
 local function C_3()
 local script = G2L["3"];
@@ -375,12 +398,12 @@ local script = G2L["9"];
 		end
 	
 		-- Change the Skybox (replace with real asset IDs)
-		sky.SkyboxUp = "rbxassetid://135779484070249"
-		sky.SkyboxDn = "rbxassetid://135779484070249"
-		sky.SkyboxLf = "rbxassetid://135779484070249"
-		sky.SkyboxRt = "rbxassetid://135779484070249"
-		sky.SkyboxBk = "rbxassetid://135779484070249"
-		sky.SkyboxFt = "rbxassetid://135779484070249"
+		sky.SkyboxUp = "rbxassetid://99345932779874"
+		sky.SkyboxDn = "rbxassetid://99345932779874"
+		sky.SkyboxLf = "rbxassetid://99345932779874"
+		sky.SkyboxRt = "rbxassetid://99345932779874"
+		sky.SkyboxBk = "rbxassetid://99345932779874"
+		sky.SkyboxFt = "rbxassetid://99345932779874"
 	
 		print("Sky has been changed!")
 	end
@@ -618,6 +641,49 @@ local script = G2L["12"];
 	
 	-- Start the RGB effect
 	task.spawn(RGBEffect)
+	local button = script.Parent -- The GUI button
+	local player = game.Players.LocalPlayer
+	local character = player.Character or player.CharacterAdded:Wait()
+	local humanoid = character:FindFirstChildOfClass("Humanoid")
+	local dancing = false -- Tracks if the player is already dancing
+	
+	-- R6 & R15 Dance Animations
+	local R6_DANCE = "rbxassetid://77840587207188"  -- Replace with a valid R6 dance animation ID
+	local R15_DANCE = "rbxassetid://103588900769350" -- Replace with a valid R15 dance animation ID
+	
+	-- Detect if the player is R6 or R15
+	local function isR6()
+		return character:FindFirstChild("Torso") and not character:FindFirstChild("UpperTorso")
+	end
+	
+	-- Choose the correct animation based on R6 or R15
+	local danceAnimation = Instance.new("Animation")
+	danceAnimation.AnimationId = isR6() and R6_DANCE or R15_DANCE
+	
+	local danceTrack = nil
+	
+	-- Function to toggle dance
+	local function toggleDance()
+		if humanoid then
+			if dancing then
+				-- Stop dancing
+				if danceTrack then
+					danceTrack:Stop()
+					danceTrack:Destroy()
+					danceTrack = nil
+				end
+				dancing = false
+			else
+				-- Start dancing
+				danceTrack = humanoid:LoadAnimation(danceAnimation)
+				danceTrack:Play()
+				dancing = true
+			end
+		end
+	end
+	
+	-- Connect button click event
+	button.MouseButton1Click:Connect(toggleDance)
 	
 end;
 task.spawn(C_12);
@@ -659,7 +725,7 @@ task.spawn(C_14);
 local function C_16()
 local script = G2L["16"];
 	local button = script.Parent
-	local imageId = "http://www.roblox.com/asset/?id=135779484070249" -- Replace with your Decal ID
+	local imageId = "http://www.roblox.com/asset/?id=99345932779874" -- Replace with your Decal ID
 	local isActive = false
 	
 	local faces = {
@@ -772,7 +838,7 @@ local script = G2L["1a"];
 	-- Create and configure the sound
 	local sound = Instance.new("Sound", button)
 	sound.SoundId = "rbxassetid://1846924681" -- Sound ID (Button Click)
-	sound.Volume = 1
+	sound.Volume = 100
 	sound.PlayOnRemove = true 
 	sound.Looped=true -- Instantly plays when removed
 	
@@ -871,6 +937,128 @@ task.spawn(C_1c);
 -- StarterGui.ScreenGui.Frame.TextButton.LocalScript
 local function C_1e()
 local script = G2L["1e"];
+	local button = script.Parent
+	local player = game.Players.LocalPlayer
+	local jumpscareID = "rbxassetid://137235526405521"  -- Replace with your image ID
+	
+	button.MouseButton1Click:Connect(function()
+		-- Create a ScreenGui to cover the entire screen
+		local screenGui = Instance.new("ScreenGui")
+		screenGui.Parent = game.Players.LocalPlayer:FindFirstChild("PlayerGui")
+	
+		-- Create an ImageLabel to show the jumpscare image
+		local imageLabel = Instance.new("ImageLabel")
+		imageLabel.Size = UDim2.new(1, 0, 1, 0)  -- Full screen size
+		imageLabel.Position = UDim2.new(0, 0, 0, 0)
+		imageLabel.BackgroundTransparency = 0
+		imageLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- Black background
+		imageLabel.Image = jumpscareID
+		imageLabel.ScaleType = Enum.ScaleType.Stretch  -- Stretches to fit screen
+		imageLabel.Parent = screenGui
+	
+		-- Remove jumpscare after 2 seconds
+		task.wait(3)
+		screenGui:Destroy()
+	end)
+	
+	
+	
+	local frame = script.Parent -- Make sure this script is inside the Frame
+	
+	-- Function to smoothly cycle through RGB colors
+	local function RGBEffect()
+		while true do
+			for i = 0, 255, 5 do
+				frame.BorderColor3 = Color3.fromRGB(i, 0, 255 - i) -- Red to Blue
+				task.wait(0.05) -- Adjust speed
+			end
+			for i = 0, 255, 5 do
+				frame.BorderColor3 = Color3.fromRGB(255 - i, i, 0) -- Blue to Green
+				task.wait(0.05)
+			end
+			for i = 0, 255, 5 do
+				frame.BorderColor3 = Color3.fromRGB(0, 255 - i, i) -- Green to Red
+				task.wait(0.05)
+			end
+		end
+	end
+	
+	-- Start the RGB effect
+	task.spawn(RGBEffect)
+	
+end;
+task.spawn(C_1e);
+-- StarterGui.ScreenGui.Frame.LocalScript
+local function C_1f()
+local script = G2L["1f"];
+	local frame = script.Parent -- Make sure this script is inside the Frame
+	
+	-- Function to smoothly cycle through RGB colors
+	local function RGBEffect()
+		while true do
+			for i = 0, 255, 5 do
+				frame.BorderColor3 = Color3.fromRGB(i, 0, 255 - i) -- Red to Blue
+				task.wait(0.05) -- Adjust speed
+			end
+			for i = 0, 255, 5 do
+				frame.BorderColor3 = Color3.fromRGB(255 - i, i, 0) -- Blue to Green
+				task.wait(0.05)
+			end
+			for i = 0, 255, 5 do
+				frame.BorderColor3 = Color3.fromRGB(0, 255 - i, i) -- Green to Red
+				task.wait(0.05)
+			end
+		end
+	end
+	
+	-- Start the RGB effect
+	task.spawn(RGBEffect)
+	
+end;
+task.spawn(C_1f);
+-- StarterGui.ScreenGui.Frame.TextButton.LocalScript
+local function C_21()
+local script = G2L["21"];
+	local button = script.Parent
+	local player = game.Players.LocalPlayer
+	
+	button.MouseButton1Click:Connect(function()
+		local character = player.Character
+		if not character or not character:FindFirstChild("Head") then return end
+	
+		-- Create BillboardGui
+		local billboard = Instance.new("BillboardGui")
+		billboard.Size = UDim2.new(6, 0, 2, 0)  -- Bigger size
+		billboard.StudsOffset = Vector3.new(0, 3, 0)
+		billboard.AlwaysOnTop = true
+		billboard.Parent = character.Head  -- Attach to player's head
+	
+		-- Create TextLabel inside BillboardGui
+		local textLabel = Instance.new("TextLabel")
+		textLabel.Size = UDim2.new(1, 0, 1, 0)
+		textLabel.BackgroundTransparency = 1  -- Transparent background
+		textLabel.Text = "c00lkidd"
+		textLabel.TextScaled = false  
+		textLabel.TextSize = 50  -- Increased font size (Adjust as needed)
+		textLabel.TextColor3 = Color3.fromRGB(255)
+		textLabel.Font = Enum.Font.Arial
+		textLabel.Parent = billboard
+	
+		-- Add UIStroke (to create a visible border)
+		local stroke = Instance.new("UIStroke")
+		stroke.Thickness = 2 -- Thicker border
+		stroke.Color = Color3.fromRGB(0, 0, 0)  -- Black border
+		stroke.Parent = textLabel
+	
+		-- Auto-remove after 5 seconds
+	
+	end)
+	
+end;
+task.spawn(C_21);
+-- StarterGui.ScreenGui.Frame.TextButton.LocalScript
+local function C_22()
+local script = G2L["22"];
 	local button = script.Parent -- The GUI button
 	local player = game.Players.LocalPlayer
 	local gui = player:WaitForChild("PlayerGui")
@@ -928,34 +1116,6 @@ local script = G2L["1e"];
 	task.spawn(RGBEffect)
 	
 end;
-task.spawn(C_1e);
--- StarterGui.ScreenGui.Frame.LocalScript
-local function C_1f()
-local script = G2L["1f"];
-	local frame = script.Parent -- Make sure this script is inside the Frame
-	
-	-- Function to smoothly cycle through RGB colors
-	local function RGBEffect()
-		while true do
-			for i = 0, 255, 5 do
-				frame.BorderColor3 = Color3.fromRGB(i, 0, 255 - i) -- Red to Blue
-				task.wait(0.05) -- Adjust speed
-			end
-			for i = 0, 255, 5 do
-				frame.BorderColor3 = Color3.fromRGB(255 - i, i, 0) -- Blue to Green
-				task.wait(0.05)
-			end
-			for i = 0, 255, 5 do
-				frame.BorderColor3 = Color3.fromRGB(0, 255 - i, i) -- Green to Red
-				task.wait(0.05)
-			end
-		end
-	end
-	
-	-- Start the RGB effect
-	task.spawn(RGBEffect)
-	
-end;
-task.spawn(C_1f);
+task.spawn(C_22);
 
 return G2L["1"], require;
